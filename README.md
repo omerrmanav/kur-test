@@ -28,5 +28,5 @@ tamamen öğrenme ve kişisel kullanım amaçlıdır.
 
 ## Başka bir projeden nasıl kullanılır?
 
-Ham veriye şu adresten ulaşılabilir:
+Ham veriye şu adresten ulaşılabilir: https://raw.githubusercontent.com/omerrmanav/kur-test/main/rates.json
 
