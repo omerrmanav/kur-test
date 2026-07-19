@@ -1,0 +1,13 @@
+name: Kur Testi
+
+on:
+  workflow_dispatch:      # Actions sekmesinden elle "Run" basılabilsin diye
+  schedule:
+    - cron: '0 6 * * *'   # her gün UTC 06:00 (yani TR saatiyle ~09:00)
+
+jobs:
+  fetch-rates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kur verisini çek ve yazdır
+        run: curl -s "https://api.frankfurter.dev/v2/rates?base=USD"
