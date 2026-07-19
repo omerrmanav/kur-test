@@ -3,7 +3,7 @@ name: Kur Güncelle
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 5 * * *'   # UTC 05:00 (TR saatiyle 08:00)
+    - cron: '0 5 * * *'   # UTC 05:00 (08:00 Turkey time)
 
 permissions:
   contents: write
@@ -12,35 +12,55 @@ jobs:
   update-rates:
     runs-on: ubuntu-latest
     steps:
-      - name: Repoyu al
+      - name: Checkout repo
         uses: actions/checkout@v7
 
-      - name: Kuru çek
-        run: curl -s "https://api.frankfurter.dev/v2/rates?base=USD&quotes=EUR,TRY" -o rates.json
+      - name: Fetch rates
+        run: curl -s "https://api.frankfurter.dev/v2/rates?base=USD&quotes=EUR,GBP,JPY,CNY,TRY" -o rates.json
 
-      - name: README'yi güncelle
+      - name: Update README
         run: |
           DATE=$(TZ='Europe/Istanbul' date +"%Y-%m-%d %H:%M")
-          USD_EUR=$(jq -r '.[] | select(.quote=="EUR") | .rate' rates.json)
-          USD_TRY=$(jq -r '.[] | select(.quote=="TRY") | .rate' rates.json)
-          EUR_TRY=$(jq -n "$USD_TRY / $USD_EUR")
-          export DATE USD_EUR USD_TRY EUR_TRY
+          export DATE
           python3 << 'PYEOF'
-          import os, re
+          import os, re, json
 
           date = os.environ['DATE']
-          usd_eur = os.environ['USD_EUR']
-          usd_try = os.environ['USD_TRY']
-          eur_try = os.environ['EUR_TRY']
+          rates = {r['quote']: r['rate'] for r in json.load(open('rates.json'))}
+
+          usd_eur = rates['EUR']
+          usd_gbp = rates['GBP']
+          usd_jpy = rates['JPY']
+          usd_cny = rates['CNY']
+          usd_try = rates['TRY']
+
+          eur_try = usd_try / usd_eur
+          gbp_try = usd_try / usd_gbp
+          jpy_try = usd_try / usd_jpy
+          cny_try = usd_try / usd_cny
 
           block = f"""<!-- KUR-BASLA -->
-          **Son güncelleme:** {date} (TR saati)
+          **Last updated:** {date} (Turkey time)
 
-          | Baz | Karşı | Kur |
-          |-----|-------|-----|
-          | USD | EUR   | {usd_eur} |
-          | USD | TRY   | {usd_try} |
-          | EUR | TRY   | {eur_try} (hesaplanmış) |
+          ### Top 5 Global Currencies (vs USD)
+
+          | Currency | Code | Rate (per 1 USD) |
+          |----------|------|-------------------|
+          | US Dollar | USD | 1.0000 (base) |
+          | Euro | EUR | {usd_eur:.4f} |
+          | British Pound | GBP | {usd_gbp:.4f} |
+          | Japanese Yen | JPY | {usd_jpy:.4f} |
+          | Chinese Yuan | CNY | {usd_cny:.4f} |
+
+          ### Turkish Lira (TRY) Cross Rates
+
+          | From | To TRY |
+          |------|--------|
+          | 1 USD | {usd_try:.4f} |
+          | 1 EUR | {eur_try:.4f} |
+          | 1 GBP | {gbp_try:.4f} |
+          | 1 JPY | {jpy_try:.4f} |
+          | 1 CNY | {cny_try:.4f} |
           <!-- KUR-BITIR -->"""
 
           with open('README.md') as f:
@@ -49,16 +69,16 @@ jobs:
           if '<!-- KUR-BASLA -->' in content:
               new_content = re.sub(r'<!-- KUR-BASLA -->.*?<!-- KUR-BITIR -->', block, content, flags=re.DOTALL)
           else:
-              new_content = content.rstrip() + '\n\n<!-- KUR-BASLA -->\n' + block + '\n<!-- KUR-BITIR -->\n'
+              new_content = content.rstrip() + '\n\n' + block + '\n'
 
           with open('README.md', 'w') as f:
               f.write(new_content)
           PYEOF
 
-      - name: Değişikliği commit'le
+      - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add rates.json README.md
-          git diff --cached --quiet && echo "Değişiklik yok" || git commit -m "Kur güncelle: $(date -u +%Y-%m-%d)"
+          git diff --cached --quiet && echo "No changes" || git commit -m "Update rates: $(date -u +%Y-%m-%d)"
           git push
