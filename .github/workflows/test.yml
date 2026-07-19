@@ -21,7 +21,7 @@ jobs:
       - name: README'yi güncelle
         run: |
           DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
-          USD_EUR=$(jq -r '.[] | select(.quote=="EUR") | .rate' rates.json)
+          EUR_TRY=$(jq -r '.[] | select(.quote=="TRY") | .rate' rates.json)
           USD_TRY=$(jq -r '.[] | select(.quote=="TRY") | .rate' rates.json)
           cat > README.md << EOF
           # kur-test
@@ -33,7 +33,7 @@ jobs:
 
           | Baz | Karşı | Kur |
           |-----|-------|-----|
-          | USD | EUR   | $USD_EUR |
+          | EUR | TRY   | $EUR_TRY |
           | USD | TRY   | $USD_TRY |
           EOF
 
