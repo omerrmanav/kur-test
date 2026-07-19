@@ -8,7 +8,7 @@ no server, no manual work required.
 ## Current rates
 
 <!-- KUR-BASLA -->
-**Last updated:** 2026-07-19 23:05 (Turkey time)
+**Last updated:** 2026-07-20 02:26 (Turkey time)
 
 ### Top 5 Global Currencies (vs USD)
 
@@ -16,7 +16,7 @@ no server, no manual work required.
 |----------|------|-------------------|
 | US Dollar | USD | 1.0000 (base) |
 | Euro | EUR | 0.8729 |
-| British Pound | GBP | 0.7427 |
+| British Pound | GBP | 0.7428 |
 | Japanese Yen | JPY | 162.4200 |
 | Chinese Yuan | CNY | 6.7722 |
 
@@ -25,8 +25,8 @@ no server, no manual work required.
 | From | To TRY |
 |------|--------|
 | 1 USD | 47.1010 |
-| 1 EUR | 53.9586 |
-| 1 GBP | 63.4169 |
+| 1 EUR | 53.9574 |
+| 1 GBP | 63.4143 |
 | 1 JPY | 0.2900 |
 | 1 CNY | 6.9551 |
 <!-- KUR-BITIR -->
