@@ -24,20 +24,36 @@ jobs:
           USD_EUR=$(jq -r '.[] | select(.quote=="EUR") | .rate' rates.json)
           USD_TRY=$(jq -r '.[] | select(.quote=="TRY") | .rate' rates.json)
           EUR_TRY=$(jq -n "$USD_TRY / $USD_EUR")
-          cat > README.md << EOF
-          # kur-test
+          export DATE USD_EUR USD_TRY EUR_TRY
+          python3 << 'PYEOF'
+          import os, re
 
-          Günde bir kez otomatik güncellenen döviz kuru verisi. Başka projelerden
-          [rates.json](./rates.json) ham dosyasını çekerek kullanılabilir.
+          date = os.environ['DATE']
+          usd_eur = os.environ['USD_EUR']
+          usd_try = os.environ['USD_TRY']
+          eur_try = os.environ['EUR_TRY']
 
-          **Son güncelleme:** $DATE (TR saati)
+          block = f"""<!-- KUR-BASLA -->
+          **Son güncelleme:** {date} (TR saati)
 
           | Baz | Karşı | Kur |
           |-----|-------|-----|
-          | USD | EUR   | $USD_EUR |
-          | USD | TRY   | $USD_TRY |
-          | EUR | TRY   | $EUR_TRY |
-          EOF
+          | USD | EUR   | {usd_eur} |
+          | USD | TRY   | {usd_try} |
+          | EUR | TRY   | {eur_try} (hesaplanmış) |
+          <!-- KUR-BITIR -->"""
+
+          with open('README.md') as f:
+              content = f.read()
+
+          if '<!-- KUR-BASLA -->' in content:
+              new_content = re.sub(r'<!-- KUR-BASLA -->.*?<!-- KUR-BITIR -->', block, content, flags=re.DOTALL)
+          else:
+              new_content = content.rstrip() + '\n\n<!-- KUR-BASLA -->\n' + block + '\n<!-- KUR-BITIR -->\n'
+
+          with open('README.md', 'w') as f:
+              f.write(new_content)
+          PYEOF
 
       - name: Değişikliği commit'le
         run: |
