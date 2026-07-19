@@ -39,8 +39,6 @@ purely for learning and personal use.
 Raw data is available at: https://raw.githubusercontent.com/omerrmanav/kur-test/main/rates.json
 
 
-*(update the path above if you rename the repo)*
-
 ## Current rates
 
 <!-- KUR-BASLA -->
