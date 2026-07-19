@@ -1,13 +1,46 @@
-name: Kur Testi
+name: Kur Güncelle
 
 on:
-  workflow_dispatch:      
+  workflow_dispatch:
   schedule:
-    - cron: '0 6 * * *'   
+    - cron: '0 5 * * *'   # UTC 05:00 (TR yaz saatiyle ~08:00 sabah)
+
+permissions:
+  contents: write
 
 jobs:
-  fetch-rates:
+  update-rates:
     runs-on: ubuntu-latest
     steps:
-      - name: Kur verisini çek ve yazdır
-        run: curl -s "https://api.frankfurter.dev/v2/rates?base=USD"
+      - name: Repoyu al
+        uses: actions/checkout@v4
+
+      - name: Kuru çek
+        run: curl -s "https://api.frankfurter.dev/v2/rates?base=USD&quotes=EUR,TRY" -o rates.json
+
+      - name: README'yi güncelle
+        run: |
+          DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
+          USD_EUR=$(jq -r '.[] | select(.quote=="EUR") | .rate' rates.json)
+          USD_TRY=$(jq -r '.[] | select(.quote=="TRY") | .rate' rates.json)
+          cat > README.md << EOF
+          # kur-test
+
+          Günde bir kez otomatik güncellenen döviz kuru verisi. Başka projelerden
+          [rates.json](./rates.json) ham dosyasını çekerek kullanılabilir.
+
+          **Son güncelleme:** $DATE
+
+          | Baz | Karşı | Kur |
+          |-----|-------|-----|
+          | USD | EUR   | $USD_EUR |
+          | USD | TRY   | $USD_TRY |
+          EOF
+
+      - name: Değişikliği commit'le
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add rates.json README.md
+          git diff --cached --quiet && echo "Değişiklik yok" || git commit -m "Kur güncelle: $(date -u +%Y-%m-%d)"
+          git push
