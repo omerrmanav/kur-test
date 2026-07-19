@@ -5,6 +5,32 @@ Actions automation. A scheduled workflow runs once a day, fetches current
 exchange rates, and updates this README and `rates.json` automatically —
 no server, no manual work required.
 
+## Current rates
+
+<!-- KUR-BASLA -->
+**Last updated:** 2026-07-19 23:05 (Turkey time)
+
+### Top 5 Global Currencies (vs USD)
+
+| Currency | Code | Rate (per 1 USD) |
+|----------|------|-------------------|
+| US Dollar | USD | 1.0000 (base) |
+| Euro | EUR | 0.8729 |
+| British Pound | GBP | 0.7427 |
+| Japanese Yen | JPY | 162.4200 |
+| Chinese Yuan | CNY | 6.7722 |
+
+### Turkish Lira (TRY) Cross Rates
+
+| From | To TRY |
+|------|--------|
+| 1 USD | 47.1010 |
+| 1 EUR | 53.9586 |
+| 1 GBP | 63.4169 |
+| 1 JPY | 0.2900 |
+| 1 CNY | 6.9551 |
+<!-- KUR-BITIR -->
+
 ## What this is for
 
 - A hands-on example of GitHub Actions scheduled (cron) jobs: fetch → compute
@@ -39,30 +65,6 @@ purely for learning and personal use.
 Raw data is available at: https://raw.githubusercontent.com/omerrmanav/daily-exchange-rates/main/rates.json
 
 
-## Current rates
 
-<!-- KUR-BASLA -->
-**Last updated:** 2026-07-19 23:05 (Turkey time)
-
-### Top 5 Global Currencies (vs USD)
-
-| Currency | Code | Rate (per 1 USD) |
-|----------|------|-------------------|
-| US Dollar | USD | 1.0000 (base) |
-| Euro | EUR | 0.8729 |
-| British Pound | GBP | 0.7427 |
-| Japanese Yen | JPY | 162.4200 |
-| Chinese Yuan | CNY | 6.7722 |
-
-### Turkish Lira (TRY) Cross Rates
-
-| From | To TRY |
-|------|--------|
-| 1 USD | 47.1010 |
-| 1 EUR | 53.9586 |
-| 1 GBP | 63.4169 |
-| 1 JPY | 0.2900 |
-| 1 CNY | 6.9551 |
-<!-- KUR-BITIR -->
 
 
