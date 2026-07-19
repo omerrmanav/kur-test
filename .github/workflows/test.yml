@@ -3,7 +3,7 @@ name: Kur Güncelle
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 5 * * *'   # UTC 05:00 (TR yaz saatiyle ~08:00 sabah)
+    - cron: '0 5 * * *'   # UTC 05:00 (TR saatiyle 08:00)
 
 permissions:
   contents: write
@@ -13,14 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Repoyu al
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Kuru çek
         run: curl -s "https://api.frankfurter.dev/v2/rates?base=USD&quotes=EUR,TRY" -o rates.json
 
       - name: README'yi güncelle
         run: |
-          DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
+          DATE=$(TZ='Europe/Istanbul' date +"%Y-%m-%d %H:%M")
           USD_EUR=$(jq -r '.[] | select(.quote=="EUR") | .rate' rates.json)
           USD_TRY=$(jq -r '.[] | select(.quote=="TRY") | .rate' rates.json)
           EUR_TRY=$(jq -n "$USD_TRY / $USD_EUR")
@@ -30,7 +30,7 @@ jobs:
           Günde bir kez otomatik güncellenen döviz kuru verisi. Başka projelerden
           [rates.json](./rates.json) ham dosyasını çekerek kullanılabilir.
 
-          **Son güncelleme:** $DATE
+          **Son güncelleme:** $DATE (TR saati)
 
           | Baz | Karşı | Kur |
           |-----|-------|-----|
