@@ -36,7 +36,7 @@ purely for learning and personal use.
 
 ## Using this from another project
 
-Raw data is available at: https://raw.githubusercontent.com/omerrmanav/kur-test/main/rates.json
+Raw data is available at: https://raw.githubusercontent.com/omerrmanav/daily-exchange-rates/main/rates.json
 
 
 ## Current rates
