@@ -30,3 +30,11 @@ tamamen öğrenme ve kişisel kullanım amaçlıdır.
 
 Ham veriye şu adresten ulaşılabilir: https://raw.githubusercontent.com/omerrmanav/kur-test/main/rates.json
 
+
+## Güncel kurlar
+
+<!-- KUR-BASLA -->
+Henüz güncellenmedi.
+<!-- KUR-BITIR -->
+
+
