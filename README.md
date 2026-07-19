@@ -34,7 +34,13 @@ Ham veriye şu adresten ulaşılabilir: https://raw.githubusercontent.com/omerrm
 ## Güncel kurlar
 
 <!-- KUR-BASLA -->
-Henüz güncellenmedi.
+**Son güncelleme:** 2026-07-19 21:55 (TR saati)
+
+| Baz | Karşı | Kur |
+|-----|-------|-----|
+| USD | EUR   | 0.87291 |
+| USD | TRY   | 47.101 |
+| EUR | TRY   | 53.958598251824355 (hesaplanmış) |
 <!-- KUR-BITIR -->
 
 
