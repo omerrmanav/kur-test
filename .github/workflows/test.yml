@@ -1,9 +1,9 @@
 name: Kur Testi
 
 on:
-  workflow_dispatch:      # Actions sekmesinden elle "Run" basılabilsin diye
+  workflow_dispatch:      
   schedule:
-    - cron: '0 6 * * *'   # her gün UTC 06:00 (yani TR saatiyle ~09:00)
+    - cron: '0 6 * * *'   
 
 jobs:
   fetch-rates:
