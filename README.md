@@ -1,46 +1,50 @@
-# kur-test
+# Daily Exchange Rates
 
-Bu repo, **GitHub Actions ile otomasyon öğrenmek amacıyla** hazırlanmış küçük,
-eğitim/deneme amaçlı bir projedir. Her gün otomatik çalışan bir iş (workflow),
-güncel döviz kurlarını çekip bu dosyaya ve `rates.json` dosyasına yazıyor.
+This is a small **educational / learning project** built to explore GitHub
+Actions automation. A scheduled workflow runs once a day, fetches current
+exchange rates, and updates this README and `rates.json` automatically —
+no server, no manual work required.
 
-## Nasıl çalışır?
+## What this is for
 
-`.github/workflows/test.yml` içindeki iş, her gün TR saatiyle sabah otomatik
-tetikleniyor (istenirse Actions sekmesinden elle de çalıştırılabilir):
+- A hands-on example of GitHub Actions scheduled (cron) jobs: fetch → compute
+  → commit, fully automated.
+- A lightweight, free data source other personal projects can read from
+  (instead of calling a third-party API directly on every request).
 
-1. [Frankfurter API](https://frankfurter.dev)'den güncel kuru çeker,
-2. `rates.json` dosyasına ham veriyi yazar,
-3. Aşağıdaki tabloyu günceller,
-4. Değişikliği otomatik olarak commit'ler.
+## How it works
 
-## Kaynak ve önemli not
+The job in `.github/workflows/test.yml` runs automatically every morning
+(Turkey time), and can also be triggered manually from the **Actions** tab:
 
-Kur verisi, Frankfurter API üzerinden **Avrupa Merkez Bankası (ECB)**
-referans kurlarına dayanır. ECB'nin kendi belirttiği gibi bu kurlar
-**yalnızca bilgi amaçlıdır**, gerçek işlem/ödeme amacıyla kullanılmamalıdır.
-EUR→TRY satırı ECB tarafından doğrudan yayınlanmaz; USD bazlı iki kurdan
-(`USD→TRY ÷ USD→EUR`) bu repo içinde hesaplanır, yani türetilmiş bir
-değerdir.
+1. Fetches current rates from the [Frankfurter API](https://frankfurter.dev),
+2. Writes the raw response to `rates.json`,
+3. Updates the tables below,
+4. Commits the change automatically.
 
-Bu proje herhangi bir finansal tavsiye, ürün veya hizmet değildir —
-tamamen öğrenme ve kişisel kullanım amaçlıdır.
+## Source and disclaimer
 
-## Başka bir projeden nasıl kullanılır?
+Rate data comes from the [Frankfurter API](https://frankfurter.dev), which is
+based on **European Central Bank (ECB)** reference rates. As the ECB states,
+these rates are **for informational purposes only** and should not be used
+for actual transactions. Cross rates (e.g. EUR→TRY, GBP→TRY) are not
+published directly by the ECB — they are **derived** in this repo from
+USD-based rates (`USD→X ÷ USD→Y`).
 
-Ham veriye şu adresten ulaşılabilir: https://raw.githubusercontent.com/omerrmanav/kur-test/main/rates.json
+This project is not financial advice, a product, or a service — it exists
+purely for learning and personal use.
+
+## Using this from another project
+
+Raw data is available at: https://raw.githubusercontent.com/omerrmanav/kur-test/main/rates.json
 
 
-## Güncel kurlar
+*(update the path above if you rename the repo)*
+
+## Current rates
 
 <!-- KUR-BASLA -->
-**Son güncelleme:** 2026-07-19 21:55 (TR saati)
-
-| Baz | Karşı | Kur |
-|-----|-------|-----|
-| USD | EUR   | 0.87291 |
-| USD | TRY   | 47.101 |
-| EUR | TRY   | 53.958598251824355 (hesaplanmış) |
+Not updated yet.
 <!-- KUR-BITIR -->
 
 
