@@ -3,7 +3,7 @@
 Günde bir kez otomatik güncellenen döviz kuru verisi. Başka projelerden
 [rates.json](./rates.json) ham dosyasını çekerek kullanılabilir.
 
-**Son güncelleme:** 2026-07-19 18:31 UTC
+**Son güncelleme:** 2026-07-19 21:34 (TR saati)
 
 | Baz | Karşı | Kur |
 |-----|-------|-----|
